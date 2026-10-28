@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heroes in History: Pocahontas - Interactive Worksheet</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti for Completion Celebration -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        parchment: '#fcf8ed',
+                        'parchment-card': '#fffdf7',
+                        'forest-green': '#1b4332',
+                        'accent-gold': '#d4a373',
+                        'accent-orange': '#e76f51',
+                        'wood-dark': '#4a3728',
+                        'border-brown': '#8d6e63'
+                    },
+                    fontFamily: {
+                        serif: ['Georgia', 'Cambria', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f4ebd9;
+            background-image: radial-gradient(#e0d3bc 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .wood-border {
+            border: 4px solid #8d6e63;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .custom-checkbox {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            border: 2px solid #8d6e63;
+            transition: all 0.2s ease;
+        }
+        .statement-card {
+            transition: all 0.2s ease-in-out;
+        }
+        .statement-card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 min-h-screen py-6 px-3 sm:px-6">
+
+    <div class="max-w-5xl mx-auto space-y-8">
+        
+        <!-- HEADER SECTION -->
+        <header class="bg-forest-green text-white rounded-2xl p-6 shadow-xl border-4 border-accent-gold relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-10 text-white text-9xl pointer-events-none">
+                <i class="fa-solid fa-compass"></i>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
+                <div class="text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 bg-accent-gold/30 text-amber-100 text-xs font-bold px-3 py-1 rounded-full mb-2 uppercase tracking-wide border border-accent-gold/40">
+                        <i class="fa-solid fa-graduation-cap"></i> 6th Grade English • Biography Lesson
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-serif font-bold text-amber-100 tracking-wide">
+                        HEROES IN HISTORY: POCAHONTAS
+                    </h1>
+                    <p class="text-emerald-100 text-sm sm:text-base mt-1">
+                        Read the text cards below and complete the interactive exercises!
+                    </p>
+                </div>
+                
+                <!-- Score Counter Badge -->
+                <div class="bg-white/10 backdrop-blur-md px-5 py-3 rounded-xl border border-white/20 text-center min-w-[160px]">
+                    <span class="text-xs text-amber-200 uppercase font-semibold tracking-wider block">Your Score</span>
+                    <span id="global-score" class="text-3xl font-bold font-serif text-amber-300">0 / 10</span>
+                    <div class="flex justify-center gap-1 mt-1 text-amber-400 text-sm" id="star-rating">
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- REFERENCE TEXT / STORY CARDS -->
+        <section class="bg-parchment p-5 sm:p-6 rounded-2xl wood-border">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b-2 border-amber-800/20">
+                <h2 class="text-xl sm:text-2xl font-serif font-bold text-forest-green flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-accent-gold"></i> Story Reference: Biography of Pocahontas
+                </h2>
+                <button id="toggle-text-btn" class="text-xs sm:text-sm bg-amber-800/10 hover:bg-amber-800/20 text-amber-900 font-medium px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-eye-slash"></i> <span>Hide Reading Text</span>
+                </button>
+            </div>
+
+            <div id="story-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <!-- Card 1 -->
+                <div class="bg-parchment-card p-4 rounded-xl border border-amber-900/20 shadow-sm relative pl-12">
+                    <div class="absolute left-3 top-4 w-7 h-7 rounded-full bg-forest-green text-amber-100 flex items-center justify-center font-bold text-sm">
+                        1
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-forest-green mb-1">Early Life in Virginia</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        Pocahontas was the daughter of Chief Powhatan. Her real name was Matoaka. As a child, she was curious, brave, and loved by her tribe.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-parchment-card p-4 rounded-xl border border-amber-900/20 shadow-sm relative pl-12">
+                    <div class="absolute left-3 top-4 w-7 h-7 rounded-full bg-forest-green text-amber-100 flex items-center justify-center font-bold text-sm">
+                        2
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-forest-green mb-1">Meeting the Settlers (1607)</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        English settlers arrived and built Jamestown. Young Pocahontas became a friend to Captain John Smith and helped bring peace.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-parchment-card p-4 rounded-xl border border-amber-900/20 shadow-sm relative pl-12">
+                    <div class="absolute left-3 top-4 w-7 h-7 rounded-full bg-forest-green text-amber-100 flex items-center justify-center font-bold text-sm">
+                        3
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-forest-green mb-1">A Kind Peacemaker</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        When the settlers had no food in winter, she brought corn and supplies to save them. She helped two different cultures understand each other.
+                    </p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-parchment-card p-4 rounded-xl border border-amber-900/20 shadow-sm relative pl-12">
+                    <div class="absolute left-3 top-4 w-7 h-7 rounded-full bg-forest-green text-amber-100 flex items-center justify-center font-bold text-sm">
+                        4
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-forest-green mb-1">Journey & Legacy</h3>
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        Later, she married John Rolfe, took the name Rebecca, and traveled to London. Today, we remember her for her courage and kindness.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Key Words Bar -->
+            <div class="mt-4 bg-amber-100/60 p-3 rounded-xl border border-amber-300 flex flex-wrap items-center justify-between gap-2 text-sm">
+                <span class="font-bold text-amber-900 flex items-center gap-1">
+                    <i class="fa-solid fa-key text-accent-gold"></i> Key Words:
+                </span>
+                <div class="flex flex-wrap gap-2 text-xs sm:text-sm font-semibold text-forest-green">
+                    <span class="bg-white px-2.5 py-1 rounded-md border border-amber-200">Chief</span>
+                    <span class="bg-white px-2.5 py-1 rounded-md border border-amber-200">Settlers</span>
+                    <span class="bg-white px-2.5 py-1 rounded-md border border-amber-200">Peace</span>
+                    <span class="bg-white px-2.5 py-1 rounded-md border border-amber-200">Courage</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- TASKS / EXERCISES -->
+        <main class="space-y-6">
+
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-serif font-bold text-wood-dark flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-forest-green"></i> Exercises (Choose 2 Correct Statements per Task)
+                </h2>
+                <button onclick="checkAllTasks()" class="bg-forest-green hover:bg-emerald-900 text-amber-100 px-4 py-2 rounded-xl text-sm font-bold shadow-md transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-check-double"></i> Check All
+                </button>
+            </div>
+
+            <!-- TASK 1 -->
+            <div class="bg-parchment p-5 sm:p-6 rounded-2xl wood-border task-card" id="task-1">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-200/60 px-2.5 py-0.5 rounded-md">Task 1</span>
+                        <h3 class="text-lg font-bold text-forest-green font-serif mt-1">Early Life in Virginia</h3>
+                        <p class="text-xs sm:text-sm text-gray-600">Select the <strong>2 correct sentences</strong> based on Card 1.</p>
+                    </div>
+                    <span class="task-status text-xs font-bold px-2.5 py-1 rounded-lg bg-gray-200 text-gray-600">0/2 Selected</span>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 mt-4">
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="1" data-statement="0" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">A) Pocahontas was the daughter of Chief Powhatan.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="1" data-statement="1" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">B) Her real name was Matoaka.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="1" data-statement="2" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">C) As a child, she was afraid of everyone in her tribe.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="1" data-statement="3" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">D) She did not like to learn new things.</span>
+                    </label>
+                </div>
+
+                <div class="task-feedback hidden mt-4 p-3 rounded-xl text-xs sm:text-sm font-medium"></div>
+
+                <div class="mt-4 flex justify-end gap-2">
+                    <button onclick="checkTask(1)" class="bg-amber-700 hover:bg-amber-800 text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-all">Check Task 1</button>
+                </div>
+            </div>
+
+            <!-- TASK 2 -->
+            <div class="bg-parchment p-5 sm:p-6 rounded-2xl wood-border task-card" id="task-2">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-200/60 px-2.5 py-0.5 rounded-md">Task 2</span>
+                        <h3 class="text-lg font-bold text-forest-green font-serif mt-1">Meeting the Settlers (1607)</h3>
+                        <p class="text-xs sm:text-sm text-gray-600">Select the <strong>2 correct sentences</strong> based on Card 2.</p>
+                    </div>
+                    <span class="task-status text-xs font-bold px-2.5 py-1 rounded-lg bg-gray-200 text-gray-600">0/2 Selected</span>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 mt-4">
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="2" data-statement="0" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">A) English settlers arrived and built a town called Jamestown.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="2" data-statement="1" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">B) Pocahontas became an enemy to Captain John Smith.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="2" data-statement="2" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">C) Young Pocahontas helped bring peace between people.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="2" data-statement="3" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">D) The settlers lived in tents and never built houses.</span>
+                    </label>
+                </div>
+
+                <div class="task-feedback hidden mt-4 p-3 rounded-xl text-xs sm:text-sm font-medium"></div>
+
+                <div class="mt-4 flex justify-end gap-2">
+                    <button onclick="checkTask(2)" class="bg-amber-700 hover:bg-amber-800 text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-all">Check Task 2</button>
+                </div>
+            </div>
+
+            <!-- TASK 3 -->
+            <div class="bg-parchment p-5 sm:p-6 rounded-2xl wood-border task-card" id="task-3">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-200/60 px-2.5 py-0.5 rounded-md">Task 3</span>
+                        <h3 class="text-lg font-bold text-forest-green font-serif mt-1">A Kind Peacemaker</h3>
+                        <p class="text-xs sm:text-sm text-gray-600">Select the <strong>2 correct sentences</strong> based on Card 3.</p>
+                    </div>
+                    <span class="task-status text-xs font-bold px-2.5 py-1 rounded-lg bg-gray-200 text-gray-600">0/2 Selected</span>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 mt-4">
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="3" data-statement="0" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">A) When the settlers had no food in winter, Pocahontas brought corn and supplies.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="3" data-statement="1" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">B) She wanted the different cultures to fight each other.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="3" data-statement="2" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">C) She helped two different cultures understand each other.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="3" data-statement="3" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">D) She kept all the food for herself during the winter.</span>
+                    </label>
+                </div>
+
+                <div class="task-feedback hidden mt-4 p-3 rounded-xl text-xs sm:text-sm font-medium"></div>
+
+                <div class="mt-4 flex justify-end gap-2">
+                    <button onclick="checkTask(3)" class="bg-amber-700 hover:bg-amber-800 text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-all">Check Task 3</button>
+                </div>
+            </div>
+
+            <!-- TASK 4 -->
+            <div class="bg-parchment p-5 sm:p-6 rounded-2xl wood-border task-card" id="task-4">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-200/60 px-2.5 py-0.5 rounded-md">Task 4</span>
+                        <h3 class="text-lg font-bold text-forest-green font-serif mt-1">Journey & Legacy</h3>
+                        <p class="text-xs sm:text-sm text-gray-600">Select the <strong>2 correct sentences</strong> based on Card 4.</p>
+                    </div>
+                    <span class="task-status text-xs font-bold px-2.5 py-1 rounded-lg bg-gray-200 text-gray-600">0/2 Selected</span>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 mt-4">
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="4" data-statement="0" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">A) Later in life, she married John Rolfe.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="4" data-statement="1" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">B) She took the name Rebecca and traveled to London.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="4" data-statement="2" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">C) She lived her whole life in Virginia and never traveled.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="4" data-statement="3" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">D) Today, people remember her for being angry and mean.</span>
+                    </label>
+                </div>
+
+                <div class="task-feedback hidden mt-4 p-3 rounded-xl text-xs sm:text-sm font-medium"></div>
+
+                <div class="mt-4 flex justify-end gap-2">
+                    <button onclick="checkTask(4)" class="bg-amber-700 hover:bg-amber-800 text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-all">Check Task 4</button>
+                </div>
+            </div>
+
+            <!-- TASK 5 -->
+            <div class="bg-parchment p-5 sm:p-6 rounded-2xl wood-border task-card" id="task-5">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-200/60 px-2.5 py-0.5 rounded-md">Task 5</span>
+                        <h3 class="text-lg font-bold text-forest-green font-serif mt-1">General Review & Key Words</h3>
+                        <p class="text-xs sm:text-sm text-gray-600">Select the <strong>2 correct sentences</strong> about the whole story.</p>
+                    </div>
+                    <span class="task-status text-xs font-bold px-2.5 py-1 rounded-lg bg-gray-200 text-gray-600">0/2 Selected</span>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 mt-4">
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="5" data-statement="0" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">A) Pocahontas is a true hero known as a "Bridge Between Two Worlds".</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="5" data-statement="1" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">B) One of the key words in this lesson is "Courage".</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="5" data-statement="2" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">C) Pocahontas lived in the 20th century.</span>
+                    </label>
+
+                    <label class="statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3">
+                        <input type="checkbox" data-task="5" data-statement="3" class="hidden" onchange="handleSelection(this)">
+                        <div class="custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"></div>
+                        <span class="text-sm font-medium text-gray-800">D) Her father was a famous European king.</span>
+                    </label>
+                </div>
+
+                <div class="task-feedback hidden mt-4 p-3 rounded-xl text-xs sm:text-sm font-medium"></div>
+
+                <div class="mt-4 flex justify-end gap-2">
+                    <button onclick="checkTask(5)" class="bg-amber-700 hover:bg-amber-800 text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-all">Check Task 5</button>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- FOOTER CONTROLS & RESTART -->
+        <footer class="bg-parchment p-6 rounded-2xl wood-border flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-center sm:text-left">
+                <h4 class="font-bold text-forest-green font-serif">Great Job Learning History!</h4>
+                <p class="text-xs text-gray-600">Try to get 10 / 10 correct choices for 5 stars.</p>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="resetAll()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i> Reset Quiz
+                </button>
+                <button onclick="checkAllTasks()" class="bg-forest-green hover:bg-emerald-900 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-trophy text-amber-300"></i> Finish & Check
+                </button>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- APP LOGIC JS -->
+    <script>
+        // Correct answers index array for each task (0=A, 1=B, 2=C, 3=D)
+        const correctAnswers = {
+            1: [0, 1], // A, B
+            2: [0, 2], // A, C
+            3: [0, 2], // A, C
+            4: [0, 1], // A, B
+            5: [0, 1]  // A, B
+        };
+
+        const explanations = {
+            1: {
+                correct: "Awesome! Statement A and B are true. She was Chief Powhatan's daughter, and her real name was Matoaka.",
+                wrong: "Check Card 1: She was curious and brave (not afraid) and loved to learn new things!"
+            },
+            2: {
+                correct: "Great work! Statement A and C are correct. Jamestown was built in 1607, and she helped bring peace.",
+                wrong: "Check Card 2: She became a friend (not enemy) to Captain John Smith and they built Jamestown."
+            },
+            3: {
+                correct: "Spot on! Statement A and C are true. She shared corn during winter and helped cultures understand each other.",
+                wrong: "Check Card 3: She was a kind peacemaker who shared food to save the settlers from winter hunger."
+            },
+            4: {
+                correct: "Excellent! Statement A and B are correct. She married John Rolfe, became Rebecca, and went to London.",
+                wrong: "Check Card 4: She traveled to London and is remembered today for her courage and kindness!"
+            },
+            5: {
+                correct: "Fantastic! Statement A and B are true. She bridged two worlds, and Courage is a key word.",
+                wrong: "Check Card 5: She lived c. 1596–1617 (16th/17th century) and her father was Chief Powhatan."
+            }
+        };
+
+        // Toggle story text visibility
+        document.getElementById('toggle-text-btn').addEventListener('click', function() {
+            const container = document.getElementById('story-cards-container');
+            const icon = this.querySelector('i');
+            const label = this.querySelector('span');
+
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                icon.className = 'fa-solid fa-eye-slash';
+                label.textContent = 'Hide Reading Text';
+            } else {
+                container.classList.add('hidden');
+                icon.className = 'fa-solid fa-eye';
+                label.textContent = 'Show Reading Text';
+            }
+        });
+
+        // Handle checkbox selection logic
+        function handleSelection(input) {
+            const taskId = input.dataset.task;
+            const taskCard = document.getElementById(`task-${taskId}`);
+            const selectedInputs = taskCard.querySelectorAll('input[type="checkbox"]:checked');
+
+            // Limit to max 2 selections per task
+            if (selectedInputs.length > 2) {
+                input.checked = false;
+                return;
+            }
+
+            // Update UI card visual state
+            const label = input.closest('label');
+            const customCheckbox = label.querySelector('.custom-checkbox');
+
+            if (input.checked) {
+                label.classList.add('border-forest-green', 'bg-emerald-50/50');
+                label.classList.remove('border-gray-200');
+                customCheckbox.classList.add('bg-forest-green', 'border-forest-green');
+                customCheckbox.innerHTML = '<i class="fa-solid fa-check"></i>';
+            } else {
+                label.classList.remove('border-forest-green', 'bg-emerald-50/50');
+                label.classList.add('border-gray-200');
+                customCheckbox.classList.remove('bg-forest-green', 'border-forest-green');
+                customCheckbox.innerHTML = '';
+            }
+
+            // Update selection counter status badge
+            const statusBadge = taskCard.querySelector('.task-status');
+            const count = selectedInputs.length;
+            statusBadge.textContent = `${count}/2 Selected`;
+
+            if (count === 2) {
+                statusBadge.className = 'task-status text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-200 text-amber-900';
+            } else {
+                statusBadge.className = 'task-status text-xs font-bold px-2.5 py-1 rounded-lg bg-gray-200 text-gray-600';
+            }
+        }
+
+        // Check single task
+        function checkTask(taskId) {
+            const taskCard = document.getElementById(`task-${taskId}`);
+            const inputs = taskCard.querySelectorAll('input[type="checkbox"]');
+            const selected = Array.from(inputs).filter(i => i.checked).map(i => parseInt(i.dataset.statement));
+            const feedbackEl = taskCard.querySelector('.task-feedback');
+
+            if (selected.length < 2) {
+                feedbackEl.className = 'task-feedback mt-4 p-3 rounded-xl text-xs sm:text-sm font-medium bg-amber-100 text-amber-900 border border-amber-300 block';
+                feedbackEl.innerHTML = '<i class="fa-solid fa-circle-exclamation mr-1"></i> Please choose 2 statements before checking!';
+                return;
+            }
+
+            const targetCorrect = correctAnswers[taskId];
+            const isFullyCorrect = selected.length === 2 && selected.every(val => targetCorrect.includes(val));
+
+            // Highlight statements
+            inputs.forEach(input => {
+                const statementIdx = parseInt(input.dataset.statement);
+                const label = input.closest('label');
+                const checkbox = label.querySelector('.custom-checkbox');
+                const isCorrectChoice = targetCorrect.includes(statementIdx);
+                const isUserChoice = input.checked;
+
+                // Reset standard borders
+                label.classList.remove('border-gray-200', 'border-forest-green', 'bg-emerald-50/50', 'bg-red-50', 'border-red-400', 'bg-emerald-100', 'border-emerald-500');
+
+                if (isUserChoice && isCorrectChoice) {
+                    label.classList.add('bg-emerald-100', 'border-emerald-500');
+                    checkbox.className = 'custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold bg-emerald-600 border-emerald-600';
+                    checkbox.innerHTML = '<i class="fa-solid fa-check"></i>';
+                } else if (isUserChoice && !isCorrectChoice) {
+                    label.classList.add('bg-red-50', 'border-red-400');
+                    checkbox.className = 'custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold bg-red-500 border-red-500';
+                    checkbox.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                } else if (!isUserChoice && isCorrectChoice) {
+                    // Show missed correct answer
+                    label.classList.add('border-emerald-400', 'bg-emerald-50/30');
+                }
+            });
+
+            feedbackEl.classList.remove('hidden');
+            if (isFullyCorrect) {
+                feedbackEl.className = 'task-feedback mt-4 p-3 rounded-xl text-xs sm:text-sm font-medium bg-emerald-100 text-emerald-900 border border-emerald-300 block';
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> <strong>Perfect!</strong> ${explanations[taskId].correct}`;
+            } else {
+                feedbackEl.className = 'task-feedback mt-4 p-3 rounded-xl text-xs sm:text-sm font-medium bg-rose-100 text-rose-900 border border-rose-300 block';
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600 mr-1"></i> <strong>Not quite!</strong> ${explanations[taskId].wrong}`;
+            }
+
+            updateGlobalScore();
+        }
+
+        // Check all tasks
+        function checkAllTasks() {
+            for (let i = 1; i <= 5; i++) {
+                checkTask(i);
+            }
+        }
+
+        // Calculate and update global score
+        function updateGlobalScore() {
+            let totalCorrectStatements = 0;
+
+            for (let taskId = 1; taskId <= 5; taskId++) {
+                const taskCard = document.getElementById(`task-${taskId}`);
+                const inputs = taskCard.querySelectorAll('input[type="checkbox"]');
+                const targetCorrect = correctAnswers[taskId];
+
+                inputs.forEach(input => {
+                    const statementIdx = parseInt(input.dataset.statement);
+                    if (input.checked && targetCorrect.includes(statementIdx)) {
+                        totalCorrectStatements++;
+                    }
+                });
+            }
+
+            // Update UI Score
+            document.getElementById('global-score').textContent = `${totalCorrectStatements} / 10`;
+
+            // Update Star Rating
+            const starContainer = document.getElementById('star-rating');
+            const stars = starContainer.querySelectorAll('i');
+            const earnedStars = Math.floor(totalCorrectStatements / 2);
+
+            stars.forEach((star, idx) => {
+                if (idx < earnedStars) {
+                    star.className = 'fa-solid fa-star text-amber-300';
+                } else {
+                    star.className = 'fa-regular fa-star text-amber-200/50';
+                }
+            });
+
+            // Trigger confetti when perfectly completed
+            if (totalCorrectStatements === 10) {
+                try {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                } catch(e) {}
+            }
+        }
+
+        // Reset quiz
+        function resetAll() {
+            const inputs = document.querySelectorAll('input[type="checkbox"]');
+            inputs.forEach(input => {
+                input.checked = false;
+                const label = input.closest('label');
+                label.className = 'statement-card bg-parchment-card p-3.5 rounded-xl border-2 border-gray-200 cursor-pointer flex items-start gap-3';
+                const checkbox = label.querySelector('.custom-checkbox');
+                checkbox.className = 'custom-checkbox mt-0.5 flex-shrink-0 flex items-center justify-center text-white text-xs font-bold';
+                checkbox.innerHTML = '';
+            });
+
+            for (let i = 1; i <= 5; i++) {
+                const taskCard = document.getElementById(`task-${i}`);
+                const statusBadge = taskCard.querySelector('.task-status');
+                statusBadge.textContent = '0/2 Selected';
+                statusBadge.className = 'task-status text-xs font-bold px-2.5 py-1 rounded-lg bg-gray-200 text-gray-600';
+                
+                const feedbackEl = taskCard.querySelector('.task-feedback');
+                feedbackEl.className = 'task-feedback hidden mt-4 p-3 rounded-xl text-xs sm:text-sm font-medium';
+                feedbackEl.innerHTML = '';
+            }
+
+            document.getElementById('global-score').textContent = '0 / 10';
+            const starContainer = document.getElementById('star-rating');
+            const stars = starContainer.querySelectorAll('i');
+            stars.forEach(star => {
+                star.className = 'fa-regular fa-star text-amber-200/50';
+            });
+        }
+    </script>
+</body>
+</html>
